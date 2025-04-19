@@ -15,7 +15,7 @@ class MenuItemCard extends ConsumerWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      clipBehavior: Clip.antiAlias, // Clip the image to the card shape
+      clipBehavior: Clip.antiAlias,
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -23,23 +23,22 @@ class MenuItemCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
-              aspectRatio: 16 / 9, // Common aspect ratio for images
-              child: ClipRRect( // Optional: round image corners
+              aspectRatio: 16 / 9,
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
                 child: Image.network(
                   menuItem.imageUrl,
                   fit: BoxFit.cover,
-                  // Optional: Add loading/error builders for Image.network
                   loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                          : null,
-                    ));
-                  },
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Center(child: Icon(Icons.broken_image, size: 40)),
+                     if (loadingProgress == null) return child;
+                     return Center(child: CircularProgressIndicator(
+                       value: loadingProgress.expectedTotalBytes != null
+                           ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                           : null,
+                     ));
+                   },
+                   errorBuilder: (context, error, stackTrace) =>
+                       const Center(child: Icon(Icons.broken_image, size: 40)),
                 ),
               ),
             ),
@@ -47,39 +46,41 @@ class MenuItemCard extends ConsumerWidget {
             Text(menuItem.name, style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text(
-              '\$${menuItem.price.toStringAsFixed(2)}',
+              // 通貨記号を円に
+              '¥${menuItem.price.toStringAsFixed(0)}', // 小数点以下なしに
               style: textTheme.titleSmall?.copyWith(color: colorScheme.primary),
             ),
             const SizedBox(height: 8),
             Text(
               menuItem.description,
               style: textTheme.bodySmall,
-              maxLines: 3, // Limit description lines
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            const Spacer(), // Push button to the bottom
+            const Spacer(),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.black87, // Button background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
-                ),
+                 style: TextButton.styleFrom(
+                   foregroundColor: Colors.white,
+                   backgroundColor: Colors.black87,
+                   shape: RoundedRectangleBorder(
+                     borderRadius: BorderRadius.circular(8),
+                   ),
+                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
+                 ),
                 onPressed: () {
-                  // Add item to cart using the notifier
                   ref.read(cartProvider.notifier).addItem(menuItem);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('${menuItem.name} added to cart!'),
+                      // SnackBarメッセージを日本語に
+                      content: Text('${menuItem.name} をカートに追加しました！'),
                       duration: const Duration(seconds: 1),
                     ),
                   );
                 },
-                child: const Text('Add to Cart'),
+                // ボタンラベルを日本語に
+                child: const Text('カートに追加'),
               ),
             ),
           ],
