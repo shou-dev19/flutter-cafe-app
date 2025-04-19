@@ -26,21 +26,28 @@ class MenuItemCard extends ConsumerWidget {
               aspectRatio: 16 / 9,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
-                child: Image.network(
+                child: Image.asset(
                   menuItem.imageUrl,
                   fit: BoxFit.cover,
                   width: double.infinity, // Ensure image tries to fill width
-                  loadingBuilder: (context, child, loadingProgress) {
-                     if (loadingProgress == null) return child;
-                     return Center(child: CircularProgressIndicator(
-                       value: loadingProgress.expectedTotalBytes != null
-                           ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                           : null,
-                     ));
-                   },
-                   errorBuilder: (context, error, stackTrace) =>
-                       const Center(child: Icon(Icons.broken_image, size: 40)),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Center(child: Icon(Icons.broken_image, size: 40)),
                 ),
+                // child: Image.network(
+                //   menuItem.imageUrl,
+                //   fit: BoxFit.cover,
+                //   width: double.infinity, // Ensure image tries to fill width
+                //   loadingBuilder: (context, child, loadingProgress) {
+                //      if (loadingProgress == null) return child;
+                //      return Center(child: CircularProgressIndicator(
+                //        value: loadingProgress.expectedTotalBytes != null
+                //            ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                //            : null,
+                //      ));
+                //    },
+                //    errorBuilder: (context, error, stackTrace) =>
+                //        const Center(child: Icon(Icons.broken_image, size: 40)),
+                // ),
               ),
             ),
             const SizedBox(height: 12),

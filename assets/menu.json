@@ -3,21 +3,21 @@
       "id": "1",
       "name": "チョコレートケーキ",
       "description": "濃厚でしっとりとしたチョコレートケーキの上に、繊細な粉砂糖を振りかけた、チョコレート好きにはたまらない一品。",
-      "price": 6.00,
-      "imageUrl": "./ChocolateCake.jpg"
+      "price": 600,
+      "imageUrl": "assets/ChocolateCake.jpg"
     },
     {
       "id": "2",
       "name": "チーズバーガー",
       "description": "ジューシーなビーフパティ、新鮮なレタス、完熟トマト、チェダーチーズのクラシックなチーズバーガー。",
-      "price": 8.50,
-      "imageUrl": "./Cheeseburger.jpg"
+      "price": 850,
+      "imageUrl": "assets/Cheeseburger.jpg"
     },
     {
       "id": "3",
       "name": "クリームパスタ",
       "description": "クリーミーなパスタにパルメザンチーズを絡め、新鮮なパセリを添えた楽しい味わい。",
-      "price": 7.00,
-      "imageUrl": "./Creamy Pasta"
+      "price": 900,
+      "imageUrl": "assets/CreamyPasta.jpg"
     }
 ]
