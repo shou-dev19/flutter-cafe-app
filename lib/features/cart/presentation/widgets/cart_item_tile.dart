@@ -13,8 +13,9 @@ class CartItemTile extends ConsumerWidget {
     // 画像に合わせた削除ボタンの色
     const removeButtonColor = Colors.redAccent;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+    return Card(
+      child: Padding(
+      padding: const EdgeInsets.all(8),
       child: Row(
         children: [
           Expanded(
@@ -48,6 +49,6 @@ class CartItemTile extends ConsumerWidget {
           ),
         ],
       ),
-    );
+    ),);
   }
 }
