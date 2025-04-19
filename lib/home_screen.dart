@@ -26,6 +26,14 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       // AppBarのスタイルは main.dart の AppBarTheme で設定される
       appBar: AppBar(
+        leading: Padding(padding: const EdgeInsets.all(4),
+        child: Image.asset(
+                  'assets/CafeIcon.jpeg',
+                  fit: BoxFit.cover,
+                  // width: double.infinity, // Ensure image tries to fill width
+                  // errorBuilder: (context, error, stackTrace) =>
+                  //     const Center(child: Icon(Icons.broken_image, size: 40)),
+                ),),
         title: const Text('カフェ アップ'),
         centerTitle: false,
         actions: [
@@ -157,12 +165,8 @@ class _CartSection extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-      // 画像に合わせたカートセクションの背景色（Scaffoldより少し濃いグレー）
-      final cartBgColor = Colors.grey[100]; // 例: grey[100]
-
-      return Container(
-        color: cartBgColor,
-        padding: const EdgeInsets.all(16.0),
+      return Card(
+        child: Padding(padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -203,7 +207,7 @@ class _CartSection extends StatelessWidget {
               ),
             ),
           ],
-        ),
+        ),),
       );
     }
 }
