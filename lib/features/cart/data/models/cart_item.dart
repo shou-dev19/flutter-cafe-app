@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'menu_item.dart'; // Import MenuItem if needed directly
+// Import MenuItem if needed directly
 
 part 'cart_item.freezed.dart';
 // No g.dart needed if not directly serializing CartItem with quantity
