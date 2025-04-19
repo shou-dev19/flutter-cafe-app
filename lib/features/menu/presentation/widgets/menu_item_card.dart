@@ -14,9 +14,9 @@ class MenuItemCard extends ConsumerWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      // CardThemeで設定されるスタイルを使用
+      margin: EdgeInsets.zero, // GridViewのspacingを使うのでゼロに
       clipBehavior: Clip.antiAlias,
-      elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -29,6 +29,7 @@ class MenuItemCard extends ConsumerWidget {
                 child: Image.network(
                   menuItem.imageUrl,
                   fit: BoxFit.cover,
+                  width: double.infinity, // Ensure image tries to fill width
                   loadingBuilder: (context, child, loadingProgress) {
                      if (loadingProgress == null) return child;
                      return Center(child: CircularProgressIndicator(
@@ -43,27 +44,27 @@ class MenuItemCard extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Text(menuItem.name, style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+            Text(menuItem.name, style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.black87)),
             const SizedBox(height: 4),
             Text(
-              // 通貨記号を円に
-              '¥${menuItem.price.toStringAsFixed(0)}', // 小数点以下なしに
-              style: textTheme.titleSmall?.copyWith(color: colorScheme.primary),
+              '¥${menuItem.price.toStringAsFixed(0)}',
+              style: textTheme.titleSmall?.copyWith(color: colorScheme.primary), // 価格はアクセントカラー
             ),
             const SizedBox(height: 8),
             Text(
               menuItem.description,
-              style: textTheme.bodySmall,
+              style: textTheme.bodySmall?.copyWith(color: Colors.black54), // 説明文の色
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            const Spacer(),
+            const Spacer(), // ボタンを下に押しやる
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
+                 // 画像に合わせてスタイルを設定
                  style: TextButton.styleFrom(
-                   foregroundColor: Colors.white,
-                   backgroundColor: Colors.black87,
+                   foregroundColor: Colors.black87, // 文字色
+                   backgroundColor: Colors.grey[200], // 薄いグレーの背景
                    shape: RoundedRectangleBorder(
                      borderRadius: BorderRadius.circular(8),
                    ),
@@ -73,13 +74,12 @@ class MenuItemCard extends ConsumerWidget {
                   ref.read(cartProvider.notifier).addItem(menuItem);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      // SnackBarメッセージを日本語に
                       content: Text('${menuItem.name} をカートに追加しました！'),
                       duration: const Duration(seconds: 1),
+                      behavior: SnackBarBehavior.floating, // オプション: スナックバーの表示形式
                     ),
                   );
                 },
-                // ボタンラベルを日本語に
                 child: const Text('カートに追加'),
               ),
             ),

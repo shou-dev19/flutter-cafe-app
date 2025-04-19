@@ -24,17 +24,14 @@ class HomeScreen extends ConsumerWidget {
     final bool isWideScreen = screenWidth >= 900;
 
     return Scaffold(
+      // AppBarのスタイルは main.dart の AppBarTheme で設定される
       appBar: AppBar(
-        // AppBarタイトルを日本語に
-        title: const Text('カフェ デライト'),
+        title: const Text('カフェ アップ'),
         centerTitle: false,
         actions: [
           _CartIcon(cartState: cartState, isWideScreen: isWideScreen),
           const SizedBox(width: 8),
         ],
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black87,
-        elevation: 1,
       ),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,20 +44,18 @@ class HomeScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // セクションタイトルを日本語に
-                  Text('メニュー', style: Theme.of(context).textTheme.headlineSmall),
+                  Text('メニュー', style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.black87)), // 文字色を濃いめに
                   const SizedBox(height: 16),
                   Expanded(
                     child: menuItemsAsyncValue.when(
                       data: (items) => items.isEmpty
-                        // 空メッセージを日本語に
                         ? const Center(child: Text('メニューが見つかりません。'))
                         : GridView.builder(
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: _getCrossAxisCount(screenWidth),
-                              childAspectRatio: 0.75,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8,
+                              childAspectRatio: 0.75, // 比率調整
+                              crossAxisSpacing: 12, // カード間のスペース調整
+                              mainAxisSpacing: 12, // カード間のスペース調整
                             ),
                             itemCount: items.length,
                             itemBuilder: (context, index) =>
@@ -68,7 +63,6 @@ class HomeScreen extends ConsumerWidget {
                           ),
                       loading: () => const Center(child: CircularProgressIndicator()),
                       error: (error, stackTrace) => Center(
-                        // エラーメッセージを日本語に
                         child: Text('メニュー読込エラー: ${error.toString()}'),
                       ),
                     ),
@@ -86,7 +80,6 @@ class HomeScreen extends ConsumerWidget {
             ),
         ],
       ),
-       // Narrow screen 用の Drawer や BottomSheet を設定する場合
       // endDrawer: isWideScreen ? null : Drawer(child: _CartSection(cartState: cartState)),
     );
   }
@@ -102,34 +95,35 @@ class _CartIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemCount = cartState.items.fold<int>(0, (sum, item) => sum + item.quantity);
+    // 画像に合わせたオレンジ色
+    final Color cartButtonColor = Colors.deepOrange; // ThemeのseedColorと同じ
+
     return Stack(
       alignment: Alignment.center,
       children: [
         ElevatedButton.icon(
           icon: const Icon(Icons.shopping_cart_outlined, size: 20),
-          // ボタンラベルを日本語に
           label: const Text('カート'),
           style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.deepOrangeAccent,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+             // 画像に合わせてオレンジ色に設定
+             foregroundColor: Colors.white,
+             backgroundColor: cartButtonColor,
+             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           ),
           onPressed: () {
-            if (!isWideScreen) {
-              // 例: BottomSheet を表示
+             if (!isWideScreen) {
                showModalBottomSheet(
                  context: context,
-                 // CartSectionの高さを適切に設定する必要がある
-                 builder: (_) => Container(
-                   height: MediaQuery.of(context).size.height * 0.6, // 高さを画面の60%に
-                   child: _CartSection(cartState: cartState)
-                  )
+                 isScrollControlled: true,
+                 builder: (_) => FractionallySizedBox(
+                      heightFactor: 0.7,
+                      child: _CartSection(cartState: cartState)
+                   )
                );
-              // print("カート画面へ遷移 または Bottom Sheet/Drawer を表示");
-            } else {
+             } else {
                print("カートは表示済み");
-            }
+             }
           },
         ),
         if (itemCount > 0)
@@ -137,23 +131,24 @@ class _CartIcon extends StatelessWidget {
             right: 4,
             top: 4,
             child: Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
-              child: Text(
-                '$itemCount',
-                style: const TextStyle(color: Colors.white, fontSize: 10),
-                textAlign: TextAlign.center,
-              ),
+               padding: const EdgeInsets.all(2),
+               decoration: BoxDecoration(
+                 color: Colors.red, // バッジの色は赤
+                 borderRadius: BorderRadius.circular(10),
+               ),
+               constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+               child: Text(
+                 '$itemCount',
+                 style: const TextStyle(color: Colors.white, fontSize: 10),
+                 textAlign: TextAlign.center,
+               ),
             ),
           ),
       ],
     );
   }
 }
+
 
 // --- Helper Widget for Cart Section ---
 class _CartSection extends StatelessWidget {
@@ -162,18 +157,19 @@ class _CartSection extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
+      // 画像に合わせたカートセクションの背景色（Scaffoldより少し濃いグレー）
+      final cartBgColor = Colors.grey[100]; // 例: grey[100]
+
       return Container(
-        color: Colors.grey[100],
+        color: cartBgColor,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // セクションタイトルを日本語に
-            Text('カート', style: Theme.of(context).textTheme.headlineSmall),
+            Text('カート', style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.black87)),
             const SizedBox(height: 16),
             Expanded(
               child: cartState.items.isEmpty
-                  // 空メッセージを日本語に
                   ? const Center(child: Text('カートは空です。'))
                   : ListView.builder(
                       itemCount: cartState.items.length,
@@ -187,12 +183,10 @@ class _CartSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // ラベルを日本語に
-                  Text('合計:', style: Theme.of(context).textTheme.titleLarge),
+                  Text('合計:', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.black87)),
                   Text(
-                    // 通貨記号を円に (必要に応じて)
-                    '¥${cartState.totalPrice.toStringAsFixed(0)}', // 小数点以下なしに
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                    '¥${cartState.totalPrice.toStringAsFixed(0)}',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: Colors.black87),
                   ),
                 ],
               ),
@@ -201,17 +195,10 @@ class _CartSection extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                ),
+                // style は main.dart の elevatedButtonTheme で設定される (オレンジ色)
                 onPressed: cartState.items.isEmpty ? null : () {
-                  // 注文確定ロジック
                   print('注文確定ボタンが押されました！ 合計: ¥${cartState.totalPrice.toStringAsFixed(0)}');
                 },
-                // ボタンラベルを日本語に
                 child: const Text('注文を確定する'),
               ),
             ),
