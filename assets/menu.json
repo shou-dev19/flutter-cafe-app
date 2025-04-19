@@ -1,0 +1,23 @@
+[
+    {
+      "id": "1",
+      "name": "Chocolate Cake",
+      "description": "A rich and moist chocolate cake topped with a delicate sprinkle of powdered sugar, perfect for chocolate lovers.",
+      "price": 6.00,
+      "imageUrl": "./ChocolateCake.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Cheeseburger",
+      "description": "A classic cheeseburger with a juicy beef patty, fresh lettuce, ripe tomato, and a slice of cheddar cheese.",
+      "price": 8.50,
+      "imageUrl": "./Cheeseburger.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Creamy Pasta",
+      "description": "Delicious creamy pasta tossed with parmesan cheese and garnished with fresh parsley for a delightful taste.",
+      "price": 7.00,
+      "imageUrl": "./Creamy Pasta"
+    }
+]
