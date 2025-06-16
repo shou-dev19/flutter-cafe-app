@@ -60,10 +60,10 @@ class MyApp extends StatelessWidget {
         ),
 
         // --- カードのテーマ ---
-        cardTheme: CardTheme(
+        cardTheme: const CardThemeData(
           color: cardColor, // カードの背景色を白に明示
           elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
         ),
 
         // --- 全体のボタンテーマ（個々のボタンで上書き可能） ---

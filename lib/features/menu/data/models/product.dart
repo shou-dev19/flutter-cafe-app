@@ -1,7 +1,17 @@
-class Product {
-  final String name;
-  final double price;
-  final String imageUrl;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Product({required this.name, required this.price, required this.imageUrl});
+part 'product.freezed.dart';
+part 'product.g.dart';
+
+@freezed
+class Product with _$Product {
+  const factory Product({
+    required String id,
+    required String name,
+    required String description,
+    required double price,
+    required String imageUrl,
+  }) = _Product;
+
+  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 }
