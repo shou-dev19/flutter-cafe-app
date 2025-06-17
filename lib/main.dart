@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         ),
 
         // --- カードのテーマ ---
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: cardColor, // カードの背景色を白に明示
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
